@@ -5,11 +5,11 @@ This Terraform module provides an easy-to-use solution for provisioning AWS Elas
 ## How to use this module:
 
 ```bash
-module "aws-ecs-fargate" {
+module "ecs" {
   source = "git::https://github.com/JManzur/aws-ecs-fargate.git?ref=v1.0.1"
 
   # Required variables:
-  name_prefix = "demo"
+  name_prefix = "si"
   environment = "dev"
 
   # Optional variables:
@@ -21,13 +21,13 @@ module "aws-ecs-fargate" {
 }
 ```
 
-## Providers
+## Providers:
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
 
-## Resources
+## Resources:
 
 | Name | Type |
 |------|------|
@@ -37,7 +37,7 @@ module "aws-ecs-fargate" {
 | [aws_kms_alias.ecs_execute_command](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_alias) | resource |
 | [aws_kms_key.ecs_execute_command](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
 
-## Inputs
+## Inputs:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
@@ -49,7 +49,7 @@ module "aws-ecs-fargate" {
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | [REQUIRED] Used to name and tag resources. | `string` | n/a | yes |
 | <a name="input_name_suffix"></a> [name\_suffix](#input\_name\_suffix) | [OPTIONAL] Used to name and tag global resources. | `string` | `""` | no |
 
-## Outputs
+## Outputs:
 
 | Name | Description |
 |------|-------------|
