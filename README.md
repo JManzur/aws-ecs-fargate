@@ -6,7 +6,7 @@ This Terraform module provides an easy-to-use solution for provisioning AWS Elas
 
 ```bash
 module "ecs" {
-  source = "git::https://github.com/JManzur/aws-ecs-fargate.git?ref=v1.0.1"
+  source = "git::https://github.com/JManzur/aws-ecs-fargate.git?ref=v1.0.2"
 
   # Required variables:
   name_prefix = "si"
