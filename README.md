@@ -2,12 +2,30 @@
 
 This Terraform module provides an easy-to-use solution for provisioning AWS Elastic Container Service (ECS) Clusters using Fargate as a Capacity Provider. The module comes with pre-configured templates and customizable options for logging.
 
+## How to use this module:
+
+```bash
+module "aws-ecs-fargate" {
+  source = "git::https://github.com/JManzur/aws-ecs-fargate.git?ref=v1.0.1"
+
+  # Required variables:
+  name_prefix = "demo"
+  environment = "dev"
+
+  # Optional variables:
+  name_suffix                           = "main"
+  capacity_providers                    = ["FARGATE_SPOT", "FARGATE"]
+  enable_container_insights             = true
+  include_execute_command_configuration = true
+  execute_command_log_retention         = 14
+}
+```
+
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
-
 
 ## Resources
 

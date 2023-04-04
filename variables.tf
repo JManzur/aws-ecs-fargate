@@ -22,18 +22,6 @@ variable "name_suffix" {
   default     = ""
 }
 
-variable "enable_container_insights" {
-  type        = bool
-  description = "[OPTIONAL] Enable container insights for the cluster." # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-container-insights.html
-  default     = false
-}
-
-variable "include_execute_command_configuration" {
-  type        = bool
-  description = "[OPTIONAL] Enable execute command configuration for the cluster." # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-exec.html
-  default     = false
-}
-
 variable "capacity_providers" {
   type        = list(string)
   description = "[OPTIONAL] List of capacity providers to use for the cluster."
@@ -47,6 +35,18 @@ variable "capacity_providers" {
     condition     = length([for provider in var.capacity_providers : provider if provider == "FARGATE_SPOT" || provider == "FARGATE"]) == length(var.capacity_providers)
     error_message = "Only FARGATE_SPOT and FARGATE are valid capacity providers."
   }
+}
+
+variable "enable_container_insights" {
+  type        = bool
+  description = "[OPTIONAL] Enable container insights for the cluster." # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-container-insights.html
+  default     = false
+}
+
+variable "include_execute_command_configuration" {
+  type        = bool
+  description = "[OPTIONAL] Enable execute command configuration for the cluster." # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-exec.html
+  default     = false
 }
 
 variable "execute_command_log_retention" {
