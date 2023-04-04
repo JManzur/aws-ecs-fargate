@@ -1,5 +1,5 @@
 locals {
-  cluster_name = length(var.environment) > 0 ? "${var.name_prefix}-${var.environment}-fargate-cluster-${name_suffix}" : "${var.name_prefix}-${var.environment}-fargate-cluster"
+  cluster_name = length(var.name_suffix) > 0 ? "${var.name_prefix}-${var.environment}-fargate-cluster-${var.name_suffix}" : "${var.name_prefix}-${var.environment}-fargate-cluster"
 }
 
 resource "aws_kms_key" "ecs_execute_command" {
@@ -9,10 +9,18 @@ resource "aws_kms_key" "ecs_execute_command" {
   deletion_window_in_days = 15
 }
 
+resource "aws_kms_alias" "ecs_execute_command" {
+  count = var.include_execute_command_configuration ? 1 : 0
+
+  name          = "alias/${var.name_prefix}-${var.environment}-ecs-execute-command"
+  target_key_id = aws_kms_key.ecs_execute_command[0].key_id
+}
+
 resource "aws_cloudwatch_log_group" "ecs_execute_command" {
   count = var.include_execute_command_configuration ? 1 : 0
 
-  name = local.cluster_name
+  name = "/aws/ecs/${var.name_prefix}-${var.environment}/ecs-execute-command"
+  retention_in_days = var.execute_command_log_retention
 }
 
 resource "aws_ecs_cluster" "this" {
@@ -36,10 +44,6 @@ resource "aws_ecs_cluster" "this" {
         }
       }
     }
-  }
-
-  network_configuration {
-    subnets = length(var.subnets) > 0 ? var.subnets : null
   }
 
   tags = { Name = "${local.cluster_name}" }

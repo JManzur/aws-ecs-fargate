@@ -19,7 +19,7 @@ variable "environment" {
 variable "name_suffix" {
   type        = string
   description = "[OPTIONAL] Used to name and tag global resources."
-  default     = null
+  default     = ""
 }
 
 variable "enable_container_insights" {
@@ -49,8 +49,36 @@ variable "capacity_providers" {
   }
 }
 
-variable "subnets" {
-  type        = list(string)
-  description = "[OPTIONAL] List of subnets to use for the cluster."
-  default     = null
+variable "execute_command_log_retention" {
+  type        = number
+  description = "[OPTIONAL] The number of days to retain log events in the log group for the execute command configuration."
+  default     = 7
+
+  validation {
+    condition     = (
+      var.execute_command_log_retention == 1 || 
+      var.execute_command_log_retention == 3 ||
+      var.execute_command_log_retention == 5 ||
+      var.execute_command_log_retention == 7 ||
+      var.execute_command_log_retention == 14 ||
+      var.execute_command_log_retention == 30 ||
+      var.execute_command_log_retention == 60 ||
+      var.execute_command_log_retention == 90 ||
+      var.execute_command_log_retention == 120 ||
+      var.execute_command_log_retention == 150 ||
+      var.execute_command_log_retention == 180 ||
+      var.execute_command_log_retention == 365 ||
+      var.execute_command_log_retention == 400 ||
+      var.execute_command_log_retention == 545 ||
+      var.execute_command_log_retention == 731 ||
+      var.execute_command_log_retention == 1096 ||
+      var.execute_command_log_retention == 1827 ||
+      var.execute_command_log_retention == 2192 ||
+      var.execute_command_log_retention == 2557 ||
+      var.execute_command_log_retention == 2922 ||
+      var.execute_command_log_retention == 3288 ||
+      var.execute_command_log_retention == 3653
+    )
+    error_message = "The number of days to retain log events must be one of the following: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1096, 1827, 2192, 2557, 2922, 3288, 3653."
+  }
 }
